@@ -6,6 +6,7 @@ public class Counter : MonoBehaviour
 {
     [SerializeField] private float _updateTime = 0.5f;
     [SerializeField] private float _stepValue = 1f;
+    [SerializeField] private PlayerEnter _playerEnter;
 
     private float _realtimeValue = 0f;
     private bool _isCorutinePlay = false;
@@ -13,11 +14,11 @@ public class Counter : MonoBehaviour
 
     public event Action<float> Counting;
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-            SwitchTimer();
-    }
+    private void OnEnable() =>
+        _playerEnter.Enter += SwitchTimer;
+
+    private void OnDisable() =>
+        _playerEnter.Enter -= SwitchTimer;
 
     private void SwitchTimer()
     {
